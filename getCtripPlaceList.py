@@ -6,9 +6,14 @@ import io
 from pprint import pprint
 
 '''
+todo
+* 取得城市中文，var city/INTERFACE.poo_city_name
+'''
+
+'''
 how to use
-python3 getCtripPlaceList.py ./output/citys/eu/austria_one.json ./output/places/eu/austria_p.json
-python3 getCtripPlaceList.py ./output/citys/asia/japan_p.json ./output/places/asia/japan_p.json
+python3 getCtripPlaceList.py ./output/cities/eu/austria_one.json ./output/places/eu/austria_p.json
+python3 getCtripPlaceList.py ./output/cities/asia/japan_p.json ./output/places/asia/japan_p.json
 '''
 
 '''
@@ -26,7 +31,7 @@ def parseTraffic(url, place):
 def parseDetail(url, place):
     pprint(url)
     qDetail = PyQuery(url)
-    place["pNmEng"] = qDetail(".dest_toptitle > div > div > p").text().strip()
+    place["pNmEng"] = qDetail(".dest_toptitle > div > div > p").remove('span').text().strip()
     try:
         place["pDesc"] = qDetail(".toggle_l:first > .text_style").html().strip()
     except Exception as ex:
@@ -111,12 +116,15 @@ with open(targetFile) as data_file:
 # pprint(inputCountryJson)
 
 result = []
-for country in inputCountryJson["cities"] :
+for eachCity in inputCountryJson["cities"] :
     city = {}
-    city["cName"] = country["cName"]
-    city["url"] = "http://you.ctrip.com" + country["url"]
+    city["cName"] = eachCity["cName"]
+    city["url"] = "http://you.ctrip.com" + eachCity["url"]
     city["places"] = []
-    getListPage(city["url"])
+    try:
+        getListPage(city["url"])
+    except Exception as ex:
+        pprint(ex)
 
     result.append(city)
 

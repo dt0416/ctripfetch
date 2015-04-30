@@ -1,7 +1,10 @@
+#!/bin/bash
+
 # ===========================
 # how to use
 # sh getLineAllPlaces.sh ./output/cities/africa ./output/places/africa
 # sh getLineAllPlaces.sh ./output/cities/asia ./output/places/asia
+# sh getLineAllPlaces.sh ./output/cities/china ./output/places/china
 # sh getLineAllPlaces.sh ./output/cities/europe ./output/places/europe
 # sh getLineAllPlaces.sh ./output/cities/nanji ./output/places/nanji
 # sh getLineAllPlaces.sh ./output/cities/northamerica ./output/places/northamerica

@@ -8,6 +8,7 @@ from pprint import pprint
 '''
 how to use
 python3 getCtripAllCity.py http://you.ctrip.com/countrysightlist/japan100041.html ./output/cities/asia/japan.json
+python3 getCtripAllCity.py http://you.ctrip.com/countrysightlist/china110000.html ./output/cities/china/china.json
 '''
 
 '''
@@ -24,16 +25,20 @@ def getCities(index, value):
     city["cName"] = qList("dl > dt > a").text()
     city["url"] = qList(".gs2_more_arror").parent('a').attr('href')
     result["cities"].append(city)
+    # if (result["cName"] == "中国"):
+        # writefile(result, sys.argv[2].replace("asia", "china").replace(".json", "") + city["cName"] + ".json")
+        # result["cities"] = []
 
 '''
 Main
 '''
 result = {}
-def main(targetUrl, outputFile):
+def main(targetUrl, outputFileP):
+    outputFile = outputFileP
     # targetUrl = args[0]
-    # outputFile = args[1]
+    # outputFileP = args[1]
     # pprint(targetUrl)
-    # pprint(outputFile)
+    # pprint(outputFileP)
 
     qFirstPage = PyQuery(targetUrl)
     numpage = qFirstPage('.numpage').text()
@@ -49,10 +54,14 @@ def main(targetUrl, outputFile):
         qPage = PyQuery(cityListUrl)
         # pprint(cityListUrl)
         qPage(".list_mod1").each(getCities)
+        if (result["cName"] == "中国"): # china以分頁為單位輸出一個檔案，方便place分批處理
+            writefile(result, outputFileP.replace(".json", "_") + str(pageIndex) + ".json")
+            result["cities"] = []
 
-    writefile(result, outputFile)
+    writefile(result, outputFileP)
     # pprint(result)
 
 if __name__ == '__main__':
     # result = {}
     main(sys.argv[1], sys.argv[2])
+

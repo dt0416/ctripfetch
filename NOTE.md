@@ -3,8 +3,11 @@ STEP
 1. getLineAllCities.py
   mkdir -p ./output/cities/asia
   ex: python3 getLineAllCities.py http://you.ctrip.com/sitelist/asia120001.html ./output/cities/asia
-1. getLineAllPlaces.sh
+2. getLineAllPlaces.sh
   ex:sh getLineAllPlaces.sh ./output/cities/africa ./output/places/africa
+3. convertZ簡轉繁
+4. importData.sh
+  ex: sh importData.sh ./output/convert/africa
 
 CITY
 =====
@@ -33,8 +36,24 @@ http://you.ctrip.com/sight/vienna439/13349-traffic.html
 http://you.ctrip.com/Destinationsite/TTDSecond/Photo/AjaxPhotoDetailList?districtId=439&type=2&pindex=2&phsid=19305339&resource=13349
 http://you.ctrip.com/Destinationsite/TTDSecond/Photo/AjaxPhotoDetailList?districtId=439&type=2&pindex=2&resource=13349
 http://you.ctrip.com/Destinationsite/TTDSecond/Photo/AjaxPhotoDetailList?districtId={439}&type=2&pindex={2}&resource={13349}
-
+http://you.ctrip.com/Destinationsite/TTDSecond/Photo/AjaxPhotoDetailList?districtId={districtId}&type=2&pindex={pindex}&resource={resource}
 
 排名
 ======
 TODO 再查要從哪裡取得所有城市的Place排名
+
+call import REST API
+======
+curl -X POST http://127.0.0.1:8080/ep/rest/v1/import/importPlace -H "Content-Type: application/json" -d ./output/convert/africa/egypt100030.json
+curl -X POST http://127.0.0.1:8080/ep/rest/v1/import/importPlace -H "Content-Type: application/json" -d ./output/convert/simple.json
+
+Amazon Ec2
+======
+ssh -i jp-test.pem ubuntu@52.68.199.52
+
+command
+======
+ps aux | grep getLineAllPlaces.sh
+ps aux | grep python3
+tail -f logs/log.txt
+find ./ -name "*.json"

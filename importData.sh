@@ -5,11 +5,14 @@
 # sh importData.sh ./output/convert/africa
 # sh importData.sh ./output/convert/asia
 # sh importData.sh ./output/convert/china
+# sh importData.sh ./output/convert/china2
 # sh importData.sh ./output/convert/europe
 # sh importData.sh ./output/convert/nanji
 # sh importData.sh ./output/convert/northamerica
 # sh importData.sh ./output/convert/oceania
 # sh importData.sh ./output/convert/southamerica
+#
+# curl -X POST http://127.0.0.1:8080/ep/rest/v1/import/importPlace -H "Content-Type: application/json" -d @./output/convert/asia/cambodia100081.json
 # ===========================
 
 for countryJson in $(find "$1" -name "*.json")
